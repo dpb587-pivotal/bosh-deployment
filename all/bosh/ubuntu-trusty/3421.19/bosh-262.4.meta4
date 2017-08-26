@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metalink xmlns="urn:ietf:params:xml:ns:metalink">
+  <file name="bosh-262.4-on-ubuntu-trusty-stemcell-3421.19.tgz">
+    <hash type="md5">555d4cfc8f29a89e7af0c6a4207c152e</hash>
+    <hash type="sha-1">5fa35df695ef24ec0823c93f1ffac8ec6da95a67</hash>
+    <hash type="sha-256">d4374d6e0ed7d5c13a3aa9bf1a5e05e4536bf3968c919f2eab615ca0339ba4a5</hash>
+    <hash type="sha-512">d0622d7fd188bacbef9420b1810301c1cfed2af8fad52bbcdce3bc0db70ba74dbcce73a74d6d2d5d8c09211fd63b03089d181867a9e68c5a0e1c8420329735b6</hash>
+    <size>141597495</size>
+    <url>https://s3-external-1.amazonaws.com/bosh-dev-lake-metalink-compiled-releases-test/compiled_releases/bosh/bosh-262.4-ubuntu-trusty-3421.19-20170826-022213-663448365-20170826022219.tgz</url>
+    <version>262.4</version>
+  </file>
+  <generator>metalink.dpb587.github.io/0.0.0</generator>
+  <published>2017-08-26T02:22:24Z</published>
+</metalink>
