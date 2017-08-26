@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metalink xmlns="urn:ietf:params:xml:ns:metalink">
+  <file name="uaa-45-on-ubuntu-trusty-stemcell-3445.tgz">
+    <hash type="md5">1cfd485ad6f15b2cb30b09e2abb0fd78</hash>
+    <hash type="sha-1">4bea2c1cf4bc1b3e8109793cd29563a1e9064fe1</hash>
+    <hash type="sha-256">34bd0a8902e3e4c6a7fd90b475839ec60ecf1c1dfb0a73d566e1abe4b2682315</hash>
+    <hash type="sha-512">1c6b919960aa359a825f680c4c6cf67b4bdda40d587ab0202ca03fa51c52754a9681801b204bdf908a397378304082d2c1bcb91b4a9941aa5c02063fe44c5f91</hash>
+    <size>160079713</size>
+    <version>45</version>
+  </file>
+  <generator>metalink.dpb587.github.io/0.0.0</generator>
+  <published>2017-08-26T01:47:32Z</published>
+</metalink>
