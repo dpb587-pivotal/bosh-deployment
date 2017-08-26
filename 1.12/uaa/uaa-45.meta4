@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metalink xmlns="urn:ietf:params:xml:ns:metalink">
+  <file name="uaa-45-on-ubuntu-trusty-stemcell-3445.tgz">
+    <hash type="md5">60c48b609912d96376d6d0b96e56fb87</hash>
+    <hash type="sha-1">3404649dcc2d8e3c179961ed342fe96835ed909c</hash>
+    <hash type="sha-256">b5309ddb32e258e20b6257e9297ef22b84120a4609f268c540d42859a90f61a0</hash>
+    <hash type="sha-512">97b6f9371e3798565080d1bd7e47cb5c5270a2c1204252be30ae5917bd4708b3caed7afbb561054feb5f9c457c56186fb5a95b1eaf99d0c0d32d76d9ce1c5f3d</hash>
+    <size>160078430</size>
+    <url>https://s3-external-1.amazonaws.com/bosh-dev-lake-metalink-compiled-releases-test/compiled_releases/uaa/uaa-45-ubuntu-trusty-3445-20170826-022134-970838282-20170826022141.tgz</url>
+    <version>45</version>
+  </file>
+  <generator>metalink.dpb587.github.io/0.0.0</generator>
+  <published>2017-08-26T02:21:47Z</published>
+</metalink>
