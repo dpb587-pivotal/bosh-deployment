@@ -3,13 +3,13 @@ resources:
   - name: bosh-deployment
     type: git
     source:
-      uri: https://github.com/cloudfoundry/bosh-deployment.git
+      uri: https://github.com/dpb587-pivotal/bosh-deployment.git
       branch: compiled-releases-master
 
   - name: compiled-release-repo
     type: git
     source:
-      uri: https://github.com/cloudfoundry/bosh-deployment.git
+      uri: git@github.com:dpb587-pivotal/bosh-deployment.git
       branch: compiled-releases
       private_key: {{git_ssh_key}}
 
@@ -72,6 +72,7 @@ jobs:
     plan:
       - aggregate:
         - get: bosh-deployment
+        - get: compiled-release-repo
         - get: bosh-release
           version:
             version: "263"
@@ -84,7 +85,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.12/bosh
+          products: 1.12/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -94,6 +99,7 @@ jobs:
     plan:
       - aggregate:
         - get: bosh-deployment
+        - get: compiled-release-repo
         - get: bosh-release
           version:
             version: "262.4"
@@ -106,7 +112,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.11/bosh
+          products: 1.11/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -116,6 +126,7 @@ jobs:
     plan:
       - aggregate:
         - get: bosh-deployment
+        - get: compiled-release-repo
         - get: bosh-release
           version:
             version: "261.5"
@@ -128,7 +139,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.10/bosh
+          products: 1.10/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -138,6 +153,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: bosh-release
             version:
               version: "260.8"
@@ -150,7 +166,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.9/bosh
+          products: 1.9/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -160,6 +180,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: bosh-release
             version:
               version: "257.24"
@@ -172,7 +193,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.8/bosh
+          products: 1.8/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -182,6 +207,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: bosh-release
             version:
               version: "255.14"
@@ -194,7 +220,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-          commit_metalink: 1.7/bosh
+          products: 1.7/bosh
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -204,6 +234,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "30.5"
@@ -216,7 +247,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.10/uaa
+          products: 1.10/uaa
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -226,6 +261,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "24.12"
@@ -238,7 +274,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.9/uaa
+          products: 1.9/uaa
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -248,6 +288,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "13.17"
@@ -260,7 +301,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.8/uaa
+          products: 1.8/uaa
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -270,6 +315,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "41"
@@ -282,7 +328,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.11/uaa
+          products: 1.11/uaa
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -292,6 +342,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "45"
@@ -304,7 +355,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.11/uaa-45
+          products: 1.11/uaa-45
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true
@@ -314,6 +369,7 @@ jobs:
     plan:
       - aggregate:
           - get: bosh-deployment
+          - get: compiled-release-repo
           - get: uaa-release
             version:
               version: "45"
@@ -326,7 +382,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-          commit_metalink: 1.12/uaa
+          products: 1.12/uaa
+          s3_host: {{s3_host}}
+          s3_bucket: {{s3_bucket}}
+          s3_access_key_id: {{s3_access_key_id}}
+          s3_secret_access_key: {{s3_secret_access_key}}
       - put: compiled-release-repo
         params:
           rebase: true

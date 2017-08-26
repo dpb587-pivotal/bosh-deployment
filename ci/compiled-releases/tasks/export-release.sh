@@ -56,10 +56,20 @@ bosh -d compilation export-release $RELEASE_NAME/$RELEASE_VERSION $STEMCELL_OS/$
 mv *.tgz compiled-release/$( echo *.tgz | sed "s/\.tgz$/-$( date -u +%Y%m%d%H%M%S ).tgz/" )
 sha1sum compiled-release/*.tgz
 
-tarball_real=$( echo compiled-release/$RELEASE_NAME-*.tgz )
-tarball_nice="$RELEASE_NAME-$RELEASE_VERSION-on-$STEMCELL_OS-stemcell-$STEMCELL_VERSION"
+curl -LJo /usr/local/bin/meta4 https://github.com/dpb587/metalink/releases/download/v0.1.0/meta4-0.1.0-linux-amd64
+chmod +x /usr/local/bin/meta4
 
-metalink_path="compiled-release-repo/all/$RELEASE_NAME/$STEMCELL_OS/$STEMCELL_VERSION/$RELEASE_NAME-$RELEASE_VERSION.meta4"
+git clone --quiet file://$PWD/compiled-release-repo updated-compiled-release-repo
+
+git config --global user.email "${git_user_email:-ci@localhost}"
+git config --global user.name "${git_user_name:-CI Bot}"
+export GIT_COMMITTER_NAME="Concourse"
+export GIT_COMMITTER_EMAIL="concourse.ci@localhost"
+
+tarball_real=$( echo compiled-release/$RELEASE_NAME-*.tgz )
+tarball_nice="$RELEASE_NAME-$RELEASE_VERSION-on-$STEMCELL_OS-stemcell-$STEMCELL_VERSION.tgz"
+
+metalink_path="updated-compiled-release-repo/all/$RELEASE_NAME/$STEMCELL_OS/$STEMCELL_VERSION/$RELEASE_NAME-$RELEASE_VERSION.meta4"
 
 mkdir -p "$( dirname "$metalink_path" )"
 
@@ -75,20 +85,13 @@ if [[ -n "${s3_host:-}" ]]; then
 fi
 
 for product in $products ; do
-  metalink_product_path="compiled-release-repo/$product/$RELEASE_NAME-$RELEASE_VERSION.meta4"
+  metalink_product_path="updated-compiled-release-repo/$product/$RELEASE_NAME-$RELEASE_VERSION.meta4"
 
-  mkdir "$( dirname "$metalink_product_path" )"
+  mkdir -p "$( dirname "$metalink_product_path" )"
   cp "$metalink_path" "$metalink_product_path"
 done
 
-git clone --quiet file://$task_dir/compiled-release-repo updated-compiled-release-repo
-
-git config --global user.email "${git_user_email:-ci@localhost}"
-git config --global user.name "${git_user_name:-CI Bot}"
-export GIT_COMMITTER_NAME="Concourse"
-export GIT_COMMITTER_EMAIL="concourse.ci@localhost"
-
-cd compiled-release
+cd updated-compiled-release-repo
 
 git add -A .
 

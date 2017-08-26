@@ -18,6 +18,10 @@ outputs:
     path: updated-compiled-release-repo
 
 params:
+  s3_host: ""
+  s3_bucket: ""
+  s3_access_key_id: ""
+  s3_secret_access_key: ""
   products: ""
   git_user_email: ~
   git_user_name: ~
