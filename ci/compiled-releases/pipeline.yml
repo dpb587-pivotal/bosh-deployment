@@ -67,7 +67,40 @@ resources:
     source:
       name: bosh-warden-boshlite-ubuntu-trusty-go_agent
 
+  - name: pcf-1.11-uaa
+    type: metalink-repository
+    source:
+      uri: git+https://github.com/dpb587-pivotal/bosh-deployment.git//product/pcf-1.11/uaa #compiled-releases # branches are broken
+
 jobs:
+  - name: pcf-1.11
+    plan:
+      - aggregate:
+        - get: uaa
+          resource: pcf-1.11-uaa
+          params:
+            skip_download: true
+      - task: details
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: bosh/main-bosh-docker
+          inputs:
+            - name: uaa
+          run:
+            path: sh
+            args:
+            - -exc
+            - |
+              curl -LJo /usr/local/bin/meta4 https://github.com/dpb587/metalink/releases/download/v0.1.0/meta4-0.1.0-linux-amd64
+              chmod +x /usr/local/bin/meta4
+
+              echo "uaa:"
+              echo "  sha1: " $( meta4 --metalink=uaa/.resource/metalink.meta4 file-hash sha-1 )
+              echo "  url: " $( meta4 --metalink=uaa/.resource/metalink.meta4 file-urls )
+
   - name: compile-bosh-release-263-ubuntu-trusty-3445
     plan:
       - aggregate:
@@ -85,6 +118,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.12/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -112,6 +146,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.11/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -139,6 +174,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.10/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -166,6 +202,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.9/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -193,6 +230,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.8/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -220,6 +258,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
+        params:
           products: 1.7/bosh
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -247,6 +286,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.10/uaa
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -274,6 +314,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.9/uaa
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -301,6 +342,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.8/uaa
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -328,6 +370,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.11/uaa
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -355,6 +398,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.11/uaa-45
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}
@@ -382,6 +426,7 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
+        params:
           products: 1.12/uaa
           s3_host: {{s3_host}}
           s3_bucket: {{s3_bucket}}

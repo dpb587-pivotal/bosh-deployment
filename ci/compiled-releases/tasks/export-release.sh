@@ -70,6 +70,7 @@ tarball_real=$( echo compiled-release/$RELEASE_NAME-*.tgz )
 tarball_nice="$RELEASE_NAME-$RELEASE_VERSION-on-$STEMCELL_OS-stemcell-$STEMCELL_VERSION.tgz"
 
 metalink_path="updated-compiled-release-repo/all/$RELEASE_NAME/$STEMCELL_OS/$STEMCELL_VERSION/$RELEASE_NAME-$RELEASE_VERSION.meta4"
+rm "$metalink_path"
 
 mkdir -p "$( dirname "$metalink_path" )"
 
