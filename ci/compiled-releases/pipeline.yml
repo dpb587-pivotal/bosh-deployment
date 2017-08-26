@@ -67,17 +67,17 @@ resources:
     source:
       name: bosh-warden-boshlite-ubuntu-trusty-go_agent
 
-  - name: pcf-1.11-uaa
+  - name: pcf-1.12-bosh
     type: metalink-repository
     source:
-      uri: git+https://github.com/dpb587-pivotal/bosh-deployment.git//product/pcf-1.11/uaa #compiled-releases # branches are broken
+      uri: git+https://github.com/dpb587-pivotal/bosh-deployment.git//product/pcf-1.12/bosh #compiled-releases # branches are broken
 
 jobs:
-  - name: pcf-1.11
+  - name: pcf-1.12
     plan:
       - aggregate:
-        - get: uaa
-          resource: pcf-1.11-uaa
+        - get: bosh
+          resource: pcf-1.12-bosh
           params:
             skip_download: true
       - task: details
@@ -97,7 +97,7 @@ jobs:
               curl -LJo /usr/local/bin/meta4 https://github.com/dpb587/metalink/releases/download/v0.1.0/meta4-0.1.0-linux-amd64
               chmod +x /usr/local/bin/meta4
 
-              echo "uaa:"
+              echo "bosh:"
               echo "  sha1: " $( meta4 --metalink=uaa/.resource/metalink.meta4 file-hash sha-1 )
               echo "  url: " $( meta4 --metalink=uaa/.resource/metalink.meta4 file-urls )
 
