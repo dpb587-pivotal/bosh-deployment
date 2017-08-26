@@ -10,9 +10,17 @@ inputs:
   - name: bosh-deployment
   - name: stemcell
   - name: release
+  - name: compiled-release-repo
 
 outputs:
   - name: compiled-release
+  - name: compiled-release-repo
+    path: updated-compiled-release-repo
+
+params:
+  products: ""
+  git_user_email: ~
+  git_user_name: ~
 
 run:
   path: bosh-deployment/ci/compiled-releases/tasks/export-release.sh

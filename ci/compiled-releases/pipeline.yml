@@ -4,7 +4,14 @@ resources:
     type: git
     source:
       uri: https://github.com/cloudfoundry/bosh-deployment.git
-      branch: {{branch}}
+      branch: compiled-releases-master
+
+  - name: compiled-release-repo
+    type: git
+    source:
+      uri: https://github.com/cloudfoundry/bosh-deployment.git
+      branch: compiled-releases
+      private_key: {{git_ssh_key}}
 
   # releases
 
@@ -60,16 +67,6 @@ resources:
     source:
       name: bosh-warden-boshlite-ubuntu-trusty-go_agent
 
-  # outputs
-
-  - name: compiled-releases
-    type: s3
-    source:
-      bucket: "bosh-compiled-release-tarballs"
-      access_key_id: {{aws_key_id}}
-      secret_access_key: {{aws_secret_access_key}}
-      regexp: ".*-(\\d+).tgz"
-
 jobs:
   - name: compile-bosh-release-263-ubuntu-trusty-3445
     plan:
@@ -87,9 +84,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.12/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-bosh-release-262-ubuntu-trusty-3421
     plan:
@@ -107,9 +106,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.11/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-bosh-release-261-ubuntu-trusty-3363
     plan:
@@ -127,9 +128,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.10/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-bosh-release-260-ubuntu-trusty-3363
     plan:
@@ -147,9 +150,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.9/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-bosh-release-257-ubuntu-trusty-3363
     plan:
@@ -167,9 +172,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.8/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-bosh-release-255-ubuntu-trusty-3363
     plan:
@@ -187,9 +194,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: bosh-release
-      - put: compiled-releases
+          commit_metalink: 1.7/bosh
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-30-ubuntu-trusty-3363
     plan:
@@ -207,9 +216,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.10/uaa
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-24-ubuntu-trusty-3363
     plan:
@@ -227,9 +238,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.9/uaa
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-13-ubuntu-trusty-3363
     plan:
@@ -247,9 +260,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.8/uaa
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-41-ubuntu-trusty-3421
     plan:
@@ -267,9 +282,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.11/uaa
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-45-ubuntu-trusty-3421
     plan:
@@ -287,9 +304,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.11/uaa-45
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-uaa-release-45-ubuntu-trusty-3445
     plan:
@@ -307,9 +326,11 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: uaa-release
-      - put: compiled-releases
+          commit_metalink: 1.12/uaa
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-credhub-release-1-ubuntu-trusty-3445
     plan:
@@ -327,9 +348,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: credhub-release
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-config-server-release-0-ubuntu-trusty-3445
     plan:
@@ -347,9 +369,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: config-server-release
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-dns-release-0-ubuntu-trusty-3445
     plan:
@@ -367,9 +390,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: dns
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   # bosh-lite related
 
@@ -389,9 +413,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: warden-cpi
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-garden-linux-ubuntu-trusty-3445
     plan:
@@ -409,9 +434,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: garden-linux
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-garden-runc-ubuntu-trusty-3445
     plan:
@@ -429,9 +455,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: garden-runc
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-garden-runc-1-9-ubuntu-trusty-3445
     plan:
@@ -449,9 +476,10 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: garden-runc
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
 
   - name: compile-grootfs-ubuntu-trusty-3445
     plan:
@@ -469,6 +497,13 @@ jobs:
         input_mapping:
           stemcell: ubuntu-trusty-stemcell
           release: grootfs
-      - put: compiled-releases
+      - put: compiled-release-repo
         params:
-          file: "compiled-release/*.tgz"
+          rebase: true
+          repository: compiled-release-repo
+
+resource_types:
+- name: metalink-repository
+  type: docker-image
+  source:
+    repository: dpb587/metalink-repository-resource
